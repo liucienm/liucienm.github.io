@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Welcome!</title>
+      <link href="/2025/11/23/Welcome/"/>
+      <url>/2025/11/23/Welcome/</url>
+      
+        <content type="html"><![CDATA[<h1 id="hello-word">Hello Word!</h1><h2 id="welcome-to-liucienms-blog.">Welcome to <strong>liucienm’sblog</strong>.</h2><p>This is my first blog post. Here I will post some technical notes andpersonal essays. If you are interested, please come and have a look.Also, feel free to leave your comment and suggestions.</p><h2 id="some-test">Some test</h2><figure><img src="ufc-ov.jpg" alt="image1"><figcaption aria-hidden="true">image1</figcaption></figure><p><em>“Do Bronx”Charles Oliveira</em></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> MyFirstBlogPost </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello World</title>
       <link href="/2025/11/22/hello-world/"/>
       <url>/2025/11/22/hello-world/</url>
