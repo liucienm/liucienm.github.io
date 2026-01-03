@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2026-01-03T06:07:50.611Z</updated>
+  <updated>2026-01-03T06:12:19.934Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MyLife ---Where do we go?</title>
+    <link href="http://example.com/2026/01/03/MyLife%20---Where%20do%20we%20go/"/>
+    <id>http://example.com/2026/01/03/MyLife%20---Where%20do%20we%20go/</id>
+    <published>2026-01-03T06:09:27.000Z</published>
+    <updated>2026-01-03T06:12:19.934Z</updated>
+    
+    <content type="html"><![CDATA[<p>2016年，考研失利，去到上海大学的王兴兴在做xdog，今天呢？宇树机器人谁人不知，在民企企业家大会上的他已和任正非坐一起了。</p><p>—刷知乎刷到一条2016年的问题有感</p><p>华稽的任正韭，你呢？</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;2016年，考研失利，去到上海大学的王兴兴在做xdog，今天呢？宇树机器人谁人不知，在民企企业家大会上的他已和任正非坐一起了。&lt;/p&gt;
+&lt;p&gt;—刷知乎刷到一条2016年的问题有感&lt;/p&gt;
+&lt;p&gt;华稽的任正韭，你呢？&lt;/p&gt;
+</summary>
+      
+    
+    
+    
+    
+    <category term="Thought" scheme="http://example.com/tags/Thought/"/>
+    
+  </entry>
   
   <entry>
     <title>Welcome!</title>
