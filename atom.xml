@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2025-11-23T03:07:58.277Z</updated>
+  <updated>2026-01-03T06:04:52.042Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://example.com/2026/01/03/MyLife%20---Where%20do%20we%20go/"/>
+    <id>http://example.com/2026/01/03/MyLife%20---Where%20do%20we%20go/</id>
+    <published>2026-01-03T06:05:21.367Z</published>
+    <updated>2026-01-03T06:04:52.042Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="mylife-where-do-we-go">MyLife —Where do we go?</h1><p>2016年，考研失利，去到上海大学的王兴兴在做xdog，今天呢？宇树机器人谁人不知，在民企企业家大会上的他已和任正非坐一起了。</p><p>—刷知乎刷到一条2016年的问题有感</p><p>华稽的任正韭，你呢？</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;mylife-where-do-we-go&quot;&gt;MyLife —Where do we go?&lt;/h1&gt;
+&lt;p&gt;2016年，考研失利，去到上海大学的王兴兴在做xdog，今天呢？宇树机器人谁人不知，在民企企业家大会上的他已和任正非坐一起了。&lt;/p&gt;
+&lt;p&gt;—刷知乎刷到</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Welcome!</title>
