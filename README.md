@@ -70,6 +70,18 @@ draft: false
   想让内页也按原比例：把规则里的 `.banner-natural.enable-banner` 改成 `.enable-banner`。
 - 其它效果均为主题自带：下滑隐藏导航栏、页面切换动画（swup）。
 
+## 性能与 SEO
+
+- **字体**：只引 Roboto 的 latin 子集（`@fontsource/roboto/latin-{400,500,700}.css`），JetBrains Mono 去掉斜体变体。
+  中文正文走系统字体栈（苹方/微软雅黑），不引中文 Web 字体——单字重就要 1MB+，不划算。
+  KaTeX 的公式字体（约 1MB）仍在产物里，但只有页面真的渲染公式时浏览器才会下载。
+- **favicon**：`public/favicon/` 下的 `favicon.ico` + `icon-{32,128,180,192}.png`，由 `siteConfig.favicon` 数组声明；
+  `icon-180.png` 同时作为 iOS 的 apple-touch-icon。
+- **社交分享图**：`public/og-default.jpg`（1200×630），在 `Layout.astro` 里作为默认 `og:image` / `twitter:image`；
+  需要按页面覆盖时，给 `Layout`（或 `MainGridLayout`）传 `ogImage` 属性。
+- **canonical**：每页输出 `<link rel="canonical">`，取 `Astro.site + pathname`，自动去掉查询参数。
+- 站点地图 `/sitemap-index.xml` 与 `/rss.xml` 由构建生成，提交一次到 Google Search Console / Bing 即可。
+
 ## 备注
 
 - 已修补模板 `src/styles/markdown.css` 里两处跨文件 `@apply`（`@apply link`、`@apply btn-regular-dark`），
