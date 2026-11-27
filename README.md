@@ -77,10 +77,13 @@ draft: false
   KaTeX 的公式字体（约 1MB）仍在产物里，但只有页面真的渲染公式时浏览器才会下载。
 - **favicon**：`public/favicon/` 下的 `favicon.ico` + `icon-{32,128,180,192}.png`，由 `siteConfig.favicon` 数组声明；
   `icon-180.png` 同时作为 iOS 的 apple-touch-icon。
-- **社交分享图**：`public/og-default.jpg`，**1200×1200 方图，极简版（深色渐变 + 大号白色衬线 L，无文字）**。
-  原因：微信把链接缩略图中心裁成 1:1、Telegram/Twitter 裁成 1.91:1，方图 + 标志压在中央 630px 带内可同时满足两者；
-  无文字设计在小尺寸缩略图下辨识度最高，文件仅约 46 KB，抗二次压缩。
-  需要按页面覆盖时，给 `Layout`（或 `MainGridLayout`）传 `ogImage` 属性。
+- **社交分享图（分两张）**：
+  - `public/og-default.jpg`（1200×1200，文字版：L 方块 + 站名 + 副标题 + 域名）→ 走 `og:image` / `twitter:image`，
+    给 Telegram / Discord / Twitter 这类会显示大卡片的平台。所有文字压在中央 630px 带内，兼容 1.91:1 裁切。
+  - `public/og-wechat.jpg`（1200×1200，极简版：深色渐变 + 大号 L，无文字）→ 只挂在 `link rel="image_src"` 和
+    `meta itemprop="image"` 上，用于微信（缩略图仅 ~100px，文字必然糊）。
+  - 微信不公开说明读哪个字段；若实测发现微信读的仍是 `og:image`，就只能靠「分享专用短链」或边缘函数按 UA 分流。
+  - 需要按页面覆盖时，给 `Layout`（或 `MainGridLayout`）传 `ogImage` 属性。
 - **canonical**：每页输出 `<link rel="canonical">`，取 `Astro.site + pathname`，自动去掉查询参数。
 - 站点地图 `/sitemap-index.xml` 与 `/rss.xml` 由构建生成，提交一次到 Google Search Console / Bing 即可。
 

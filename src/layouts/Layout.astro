@@ -61,6 +61,8 @@ const favicons: Favicon[] =
 // 社交分享图（默认用 public/og-default.jpg，页面可通过 ogImage 覆盖）与规范化链接
 const siteOrigin = Astro.site ?? new URL(Astro.url.origin);
 const ogImageUrl = new URL(ogImage || "/og-default.jpg", siteOrigin).toString();
+// 微信专用：极简方图（无文字）。微信缩略图只有 ~100px，文字版会糊
+const wechatImageUrl = new URL("/og-wechat.jpg", siteOrigin).toString();
 const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
 
 // const siteLang = siteConfig.lang.replace('_', '-')
@@ -114,7 +116,11 @@ const bannerOffset =
 		<meta property="og:image:alt" content={pageTitle}>
 		<meta name="twitter:image" content={ogImageUrl}>
 		<meta name="twitter:image:alt" content={pageTitle}>
-		<meta itemprop="image" content={ogImageUrl}>
+
+		{/* 微信专用图：微信不公开就读哪个字段，这里把 image_src / itemprop 都指向极简方图；
+		    og:image 保持文字版给 Telegram / Discord / Twitter */}
+		<link rel="image_src" href={wechatImageUrl}>
+		<meta itemprop="image" content={wechatImageUrl}>
 
 		{/* 规范化链接：带不带查询参数/尾斜杠都指向唯一地址 */}
 		<link rel="canonical" href={canonicalUrl}>
