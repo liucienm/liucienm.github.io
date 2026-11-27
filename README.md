@@ -53,8 +53,17 @@ draft: false
 3. 部署到 `https://liucienm.github.io/` 根路径时，把 `astro.config.mjs` 里的 `base` 改成 `"/"`；
    部署到项目子路径（如 `https://liucienm.github.io/blog-v2/`）时用 `base: "/blog-v2/"`。
 
+## 背景图（banner）
+
+- 图片：`src/assets/images/banner.jpg`，构建时自动转 WebP。
+- 开关 / 对齐方式 / 署名：`src/config.ts` 的 `siteConfig.banner`。
+- 高度：`src/constants/constants.ts` —— `BANNER_HEIGHT`（内页，默认 35vh）、`BANNER_HEIGHT_EXTEND`（首页额外高度，默认 30 → 首页共 65vh）。
+- 效果均为主题自带：首页大背景 + 主面板上浮覆盖、下滑时导航栏隐藏、页面切换动画（swup）。
+
 ## 备注
 
 - 已修补模板 `src/styles/markdown.css` 里两处跨文件 `@apply`（`@apply link`、`@apply btn-regular-dark`），
   它们会导致构建随机失败；现已内联为等价工具类。
+- **不要把本目录随手挪动**：pnpm 在 Windows 上用 junction（绝对路径）链接依赖，移动目录后 `node_modules` 会失效，
+  需要删掉 `node_modules` 重新 `pnpm install`。
 - 站内搜索由 Pagefind 在构建后生成，无需外部服务。
