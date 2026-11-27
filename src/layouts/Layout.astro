@@ -105,13 +105,16 @@ const bannerOffset =
 		<meta name="twitter:title" content={pageTitle}>
 		<meta name="twitter:description" content={description || pageTitle}>
 
-		{/* 社交分享图（微信/Telegram/Twitter 等抓取时显示） */}
+		{/* 社交分享图：1200×1200 方图，内容压在中央横带内，
+		    这样微信（中心裁 1:1）和 Telegram/Twitter（中心裁 1.91:1）都不会切到文字 */}
 		<meta property="og:image" content={ogImageUrl}>
+		<meta property="og:image:type" content="image/jpeg">
 		<meta property="og:image:width" content="1200">
-		<meta property="og:image:height" content="630">
+		<meta property="og:image:height" content="1200">
 		<meta property="og:image:alt" content={pageTitle}>
 		<meta name="twitter:image" content={ogImageUrl}>
 		<meta name="twitter:image:alt" content={pageTitle}>
+		<meta itemprop="image" content={ogImageUrl}>
 
 		{/* 规范化链接：带不带查询参数/尾斜杠都指向唯一地址 */}
 		<link rel="canonical" href={canonicalUrl}>
