@@ -77,10 +77,10 @@ draft: false
   KaTeX 的公式字体（约 1MB）仍在产物里，但只有页面真的渲染公式时浏览器才会下载。
 - **favicon**：`public/favicon/` 下的 `favicon.ico` + `icon-{32,128,180,192}.png`，由 `siteConfig.favicon` 数组声明；
   `icon-180.png` 同时作为 iOS 的 apple-touch-icon。
-- **社交分享图**：`public/og-default.jpg`，**1200×1200 方图**，所有文字/标志压在画面中央横带（y≈300–900）内。
-  原因：微信把链接缩略图中心裁成 1:1、Telegram/Twitter 裁成 1.91:1，方图 + 中心安全区能同时满足两者；
-  图片本身做了轻微模糊和压暗，提高微信二次压缩后的可读性。
-  需要按页面覆盖时，给 `Layout`（或 `MainGridLayout`）传 `ogImage` 属性。生成脚本思路见提交记录。
+- **社交分享图**：`public/og-default.jpg`，**1200×1200 方图，极简版（深色渐变 + 大号白色衬线 L，无文字）**。
+  原因：微信把链接缩略图中心裁成 1:1、Telegram/Twitter 裁成 1.91:1，方图 + 标志压在中央 630px 带内可同时满足两者；
+  无文字设计在小尺寸缩略图下辨识度最高，文件仅约 46 KB，抗二次压缩。
+  需要按页面覆盖时，给 `Layout`（或 `MainGridLayout`）传 `ogImage` 属性。
 - **canonical**：每页输出 `<link rel="canonical">`，取 `Astro.site + pathname`，自动去掉查询参数。
 - 站点地图 `/sitemap-index.xml` 与 `/rss.xml` 由构建生成，提交一次到 Google Search Console / Bing 即可。
 
