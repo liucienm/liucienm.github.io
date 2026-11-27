@@ -14,6 +14,7 @@ import {
 	MAIN_PANEL_OVERLAPS_BANNER_HEIGHT,
 } from "../constants/constants";
 import Layout from "./Layout.astro";
+import { pathsEqual, url } from "../utils/url-utils";
 
 interface Props {
 	title?: string;
@@ -39,6 +40,10 @@ const hasBannerLink = !!siteConfig.banner.credit.url;
 const mainPanelTop = siteConfig.banner.enable
 	? `calc(${BANNER_HEIGHT}vh - ${MAIN_PANEL_OVERLAPS_BANNER_HEIGHT}rem)`
 	: "5.5rem";
+
+// 首页欢迎语：只在首页（非分页页）、且有背景图时显示
+const isHomePage = pathsEqual(Astro.url.pathname, url("/"));
+const showHomeWelcome = siteConfig.banner.enable && isHomePage;
 ---
 
 <Layout title={title} banner={banner} description={description} lang={lang} setOGTypeArticle={setOGTypeArticle}>
@@ -57,6 +62,15 @@ const mainPanelTop = siteConfig.banner.enable
                   src={siteConfig.banner.src} position={siteConfig.banner.position}
     >
     </ImageWrapper>
+</div>}
+
+<!-- Home welcome text：夹在导航栏与内容卡片之间（首页大背景的空白区）
+     文案直接取 config.ts 的 title / subtitle，改站名时这里会自动跟着变 -->
+{showHomeWelcome && <div id="home-welcome-wrapper">
+    <div id="home-welcome" class="onload-animation">
+        <span class="home-welcome-text">Welcome to {siteConfig.title}</span>
+        {siteConfig.subtitle && <span class="home-welcome-sub">{siteConfig.subtitle}</span>}
+    </div>
 </div>}
 
 <!-- Main content -->

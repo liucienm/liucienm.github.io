@@ -248,6 +248,103 @@ const bannerOffset =
 		rgba(0, 0, 0, 0.62) 100%
 	) !important;
 }
+
+/* ---------------- 自定义：首页欢迎语（导航栏与内容卡片之间的空白区） ----------------
+   位置依据首页布局：导航栏 4.5rem，卡片从 65vh - 3.5rem 开始（见上文 .banner-natural 说明）。
+   只在首页、且开启 banner 时由 MainGridLayout 渲染。 */
+#home-welcome-wrapper {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 4.5rem;
+	/* 卡片起始线：<1024px 是 35vh - 3.5rem；≥1024px 首页被额外下移 30vh 到 65vh - 3.5rem */
+	height: calc(35vh - 3.5rem - 4.5rem);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 1.5rem;
+	pointer-events: none;
+	z-index: 5;
+}
+@media (min-width: 1024px) {
+	#home-welcome-wrapper {
+		height: calc(65vh - 3.5rem - 4.5rem);
+	}
+}
+#home-welcome {
+	width: 100%;
+	max-width: 100%;
+	animation-delay: 200ms; /* 比导航栏（0ms）稍晚，和卡片错开 */
+}
+.home-welcome-text {
+	display: block;
+	width: 100%;
+	font-family: Georgia, "Times New Roman", "Songti SC", "STSong", "SimSun", serif;
+	/* 只跟宽度走；窄而矮的窗口由下面两条 height 媒体查询单独处理 */
+	font-size: clamp(1.35rem, 4vw, 3rem);
+	font-weight: 400;
+	letter-spacing: 0.01em;
+	line-height: 1.25;
+	text-align: center;
+	color: #ffffff;
+	overflow-wrap: break-word;
+	text-shadow:
+		0 2px 30px rgba(0, 0, 0, 0.62),
+		0 1px 4px rgba(0, 0, 0, 0.55);
+}
+/* 副标题：与分享图一致，用无衬线 + 淡字色 */
+.home-welcome-sub {
+	display: block;
+	margin-top: 0.6rem;
+	font-family: ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	font-size: clamp(0.82rem, 1.45vw, 1.06rem);
+	font-weight: 400;
+	letter-spacing: 0.04em;
+	text-align: center;
+	color: rgba(255, 255, 255, 0.86);
+	text-shadow:
+		0 1px 14px rgba(0, 0, 0, 0.72),
+		0 1px 3px rgba(0, 0, 0, 0.6);
+}
+@media (max-width: 480px) {
+	.home-welcome-text {
+		font-size: 1.4rem;
+		line-height: 1.35;
+	}
+}
+/* 与分享图上那条强调色短线呼应 */
+.home-welcome-text::before {
+	content: "";
+	display: block;
+	width: 64px;
+	height: 4px;
+	margin: 0 auto 1.15rem;
+	border-radius: 999px;
+	background: hsl(var(--hue), 70%, 68%);
+	box-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+}
+/* 窄且矮的窗口（高度撑不出 35vh 的 banner）时整体缩小，避免被下方卡片压住。
+   放在 ::before 之后，保证能盖住上面的默认 margin。 */
+@media (max-width: 1023px) and (max-height: 760px) {
+	.home-welcome-text {
+		font-size: clamp(1.05rem, 4vw, 2rem);
+		line-height: 1.2;
+	}
+	.home-welcome-text::before {
+		width: 48px;
+		margin-bottom: 0.7rem;
+	}
+	.home-welcome-sub {
+		margin-top: 0.35rem;
+		font-size: 0.82rem;
+	}
+}
+/* 横屏手机这类极矮窗口：这块空隙几乎不存在，直接不显示，把画面还给背景图 */
+@media (max-width: 1023px) and (max-height: 520px) {
+	#home-welcome-wrapper {
+		display: none;
+	}
+}
 </style>
 
 <script>
