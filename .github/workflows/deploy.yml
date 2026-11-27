@@ -19,9 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # 版本不要在这里重复声明，交给 package.json 的 packageManager 字段（pnpm@9.14.4）
       - uses: pnpm/action-setup@v4
-        with:
-          version: 9
       - uses: actions/setup-node@v4
         with:
           node-version: 22
