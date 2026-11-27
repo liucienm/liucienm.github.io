@@ -57,13 +57,18 @@ draft: false
 
 - 图片：`src/assets/images/banner.jpg`，构建时自动转 WebP。
 - 开关 / 对齐方式 / 署名：`src/config.ts` 的 `siteConfig.banner`。
-- **首页按原图比例完整显示（不裁剪）**：实现写在 [src/layouts/Layout.astro](src/layouts/Layout.astro) 的 `.banner-natural.enable-banner …` 规则里——
-  首页 body 多一个 `banner-natural` 类，banner 改回文档流、高度由图片 16:9 比例决定，内容排在图片下方；
-  同时取消 `#top-row` 为绝对定位 banner 预留的 65vh，否则高度会重复计算。
+- **首页：图作背景层、卡片浮在图上，且图片按原图比例完整显示（不裁剪）**。
+  主题默认是「固定 65vh + `object-cover`」会裁掉图片上下两端；这里改为：
+  1. `--banner-natural-h` = 按图片宽高比铺满宽度后的高度（`Layout.astro` 的 head 脚本按图片实际宽高写入，无 JS 时按 16:9 兜底 `calc(100vw * 0.5625)`）；
+  2. banner 仍是绝对定位的背景层，但高度取 `--banner-natural-h`；
+  3. 文档流里的 `#top-row` 预留同样高度；
+  4. 内容容器（`#main-grid` 外层）`top: calc(100% - 3.5rem)` 处上浮，于是卡片压在图片底部而不是把图挤到上面去。
+
+  相关规则集中在 `src/layouts/Layout.astro` 末尾的 `.banner-natural.enable-banner …`。
+  想调节「卡片压住图片多少」：改那条 `- 3.5rem`；想让图更矮（仍然不裁）：把 `--banner-natural-h` 乘个系数即可。
 - **内页（文章/归档/关于）仍是主题默认的 35vh 背景带**（`object-cover` 按需裁剪），避免正文被顶得太低。
-  想让内页也按原比例：把上述规则里的 `.banner-natural.enable-banner` 改成 `.enable-banner` 即可，代价是内页顶部会变很高。
-- 高度常量在 `src/constants/constants.ts`（只影响未启用 `banner-natural` 的页面）。
-- 其它效果均为主题自带：下滑隐藏导航栏、主面板上浮、页面切换动画（swup）。
+  想让内页也按原比例：把规则里的 `.banner-natural.enable-banner` 改成 `.enable-banner`。
+- 其它效果均为主题自带：下滑隐藏导航栏、页面切换动画（swup）。
 
 ## 备注
 

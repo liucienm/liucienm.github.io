@@ -136,6 +136,29 @@ const bannerOffset =
 			let offset = Math.floor(window.innerHeight * (BANNER_HEIGHT_EXTEND / 100));
 			offset = offset - offset % 4;
 			document.documentElement.style.setProperty('--banner-height-extend', `${offset}px`);
+
+			// 首页背景图：把「按原图比例铺满宽度后的高度」写进 CSS 变量，
+			// 供 banner 高度和内容容器定位共用（详见 Layout 末尾 .banner-natural 规则）
+			document.addEventListener('DOMContentLoaded', () => {
+				const bannerImg = document.querySelector('.banner-natural #banner img');
+				if (!bannerImg) return;
+				const syncBannerNaturalHeight = () => {
+					const width = bannerImg.clientWidth || window.innerWidth;
+					const naturalW = bannerImg.naturalWidth || Number(bannerImg.getAttribute('width')) || 1920;
+					const naturalH = bannerImg.naturalHeight || Number(bannerImg.getAttribute('height')) || 1080;
+					if (!width || !naturalW) return;
+					document.documentElement.style.setProperty(
+						'--banner-natural-h',
+						`${Math.round((width * naturalH) / naturalW)}px`
+					);
+				};
+				if (bannerImg.complete) {
+					syncBannerNaturalHeight();
+				} else {
+					bannerImg.addEventListener('load', syncBannerNaturalHeight);
+				}
+				window.addEventListener('resize', syncBannerNaturalHeight);
+			});
 		</script>
 		<style define:vars={{
 			configHue,
@@ -193,36 +216,38 @@ const bannerOffset =
 	}
 }
 
-/* ---------------- 自定义：首页背景图按原图比例完整显示，不裁剪 ----------------
-   默认 banner 是「固定高度 + object-cover」，会裁掉图片上下/左右。
-   这里把首页的 banner 改成常规文档流：高度由图片自身比例决定，内容排在图片下方。
-   内页（文章/归档等）保持主题默认的 35vh 背景带，避免正文被顶得太低。
-   top 用的是内联样式，必须 !important 才能覆盖。 */
-.banner-natural.enable-banner #top-row {
-	/* 主题默认给 #top-row 预留了 65vh 的 banner 空间（因为 banner 原本是绝对定位）。
-	   改常规流后这层预留要取消，否则高度会被重复计算。 */
-	height: auto !important;
-}
+/* ---------------- 自定义：首页背景图按原图比例完整显示，同时保留「图在背景、内容浮在图上」 ----------------
+   主题默认：banner 是「固定 65vh + object-cover」会被裁；内容容器绝对定位压在图上。
+   这里改成：banner 仍是绝对定位的背景层，但高度 = 图片自身高度（--banner-natural-h，
+   由 head 里的脚本按图片宽高比写入，无 JS 时按 16:9 兜底）；
+   内容容器（#main-grid 外层）起点压到图片底部上方 3.5rem，于是卡片浮在图上而不是把图挤走。
+   内页（文章/归档等）不应用这些规则，保持主题默认的 35vh 背景带。
+   内联的 top 必须 !important 才能覆盖。 */
 .banner-natural.enable-banner #banner-wrapper {
-	position: relative !important;
-	top: auto !important;
-	height: auto !important;
-	z-index: 0 !important;
+	position: absolute !important;
+	top: 0 !important;
+	left: 0 !important;
+	width: 100% !important;
+	height: var(--banner-natural-h, calc(100vw * 0.5625)) !important;
 	transform: none !important;
 }
 .banner-natural.enable-banner #banner {
-	height: auto !important;
+	height: 100% !important;
 	transform: none !important;
 }
 .banner-natural.enable-banner #banner img {
 	width: 100% !important;
-	height: auto !important;
+	height: 100% !important;
+	/* 容器比例已等于原图比例，contain 只是保险：万一比例对不上也不裁、不留黑边以外的损失 */
 	object-fit: contain !important;
 }
-/* banner 之后那个包裹 #main-grid 的绝对定位容器，改回常规流 */
+/* 文档流里为 banner 预留的空间，与图片等高 */
+.banner-natural.enable-banner #top-row {
+	height: var(--banner-natural-h, calc(100vw * 0.5625)) !important;
+}
+/* 内容整体上浮到图片底部，形成卡片压在背景图上的层次 */
 .banner-natural.enable-banner .absolute.w-full.z-30 {
-	position: relative !important;
-	top: auto !important;
+	top: calc(var(--banner-natural-h, calc(100vw * 0.5625)) - 3.5rem) !important;
 }
 .banner-natural.enable-banner #main-grid {
 	transform: none !important;
