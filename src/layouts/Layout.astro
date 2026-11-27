@@ -148,7 +148,7 @@ const bannerOffset =
 		<link rel="alternate" type="application/rss+xml" title={profileConfig.name} href={`${Astro.site}rss.xml`}/>
 
 	</head>
-	<body class=" min-h-screen transition " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner}]}
+	<body class=" min-h-screen transition " class:list={[{"lg:is-home": isHomePage, "banner-natural": isHomePage, "enable-banner": enableBanner}]}
 		  data-overlayscrollbars-initialize
 	>
 		<ConfigCarrier></ConfigCarrier>
@@ -191,6 +191,41 @@ const bannerOffset =
 	.navbar-hidden {
 		@apply opacity-0 -translate-y-16
 	}
+}
+
+/* ---------------- 自定义：首页背景图按原图比例完整显示，不裁剪 ----------------
+   默认 banner 是「固定高度 + object-cover」，会裁掉图片上下/左右。
+   这里把首页的 banner 改成常规文档流：高度由图片自身比例决定，内容排在图片下方。
+   内页（文章/归档等）保持主题默认的 35vh 背景带，避免正文被顶得太低。
+   top 用的是内联样式，必须 !important 才能覆盖。 */
+.banner-natural.enable-banner #top-row {
+	/* 主题默认给 #top-row 预留了 65vh 的 banner 空间（因为 banner 原本是绝对定位）。
+	   改常规流后这层预留要取消，否则高度会被重复计算。 */
+	height: auto !important;
+}
+.banner-natural.enable-banner #banner-wrapper {
+	position: relative !important;
+	top: auto !important;
+	height: auto !important;
+	z-index: 0 !important;
+	transform: none !important;
+}
+.banner-natural.enable-banner #banner {
+	height: auto !important;
+	transform: none !important;
+}
+.banner-natural.enable-banner #banner img {
+	width: 100% !important;
+	height: auto !important;
+	object-fit: contain !important;
+}
+/* banner 之后那个包裹 #main-grid 的绝对定位容器，改回常规流 */
+.banner-natural.enable-banner .absolute.w-full.z-30 {
+	position: relative !important;
+	top: auto !important;
+}
+.banner-natural.enable-banner #main-grid {
+	transform: none !important;
 }
 </style>
 
