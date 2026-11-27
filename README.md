@@ -59,14 +59,13 @@ draft: false
 
 - 图片：`src/assets/images/banner.jpg`，构建时自动转 WebP。
 - 开关 / 对齐方式 / 署名：`src/config.ts` 的 `siteConfig.banner`。
-- **首页：图作背景层、卡片浮在图上，且图片按原图比例完整显示（不裁剪）**。
-  主题默认是「固定 65vh + `object-cover`」会裁掉图片上下两端；这里只改 banner 自身：
-  1. `--banner-natural-h` = 图片按宽度铺满后的真实高度（`Layout.astro` head 脚本按图片实际宽高写入，无 JS 时按 16:9 兜底 `calc(100vw * 0.5625)`）；
-  2. banner 仍是绝对定位的背景层，高度取 `--banner-natural-h`，`object-fit: contain`，整图完整呈现；
-  3. **内容区沿用主题默认值**（`#top-row` 预留、内容容器 `top: 35vh - 3.5rem`、`#main-grid` 再下移 30vh = 卡片停在原版的 `65vh - 3.5rem`），所以卡片位置和官方一致，只是压在整图上而不是压在裁剪后的图上。
-
+- **首页：背景图固定在视口内，内容从其上方滑过**。
+  主题默认 banner 是 `position: absolute`，会跟着文档滚走（下滑后只剩页面底色）；
+  这里改成 `position: fixed` 铺满整个视口（`100dvh`），`object-fit: cover`，
+  并叠一层自上而下的暗色渐变，保证滑到页脚时文字仍可读。
+  内页（文章/归档/关于）仍用主题默认的 35vh 背景带。
   相关规则集中在 `src/layouts/Layout.astro` 末尾的 `.banner-natural.enable-banner …`。
-  注意：图片高度取决于宽度（16:9），屏高很大时图片下边缘可能高于卡片起始线，中间会露出一点页面底色；屏高较小时卡片会压住图片底部。
+  注意：`cover` 会按视口比例裁切（16:9 屏幕几乎不裁；竖屏或超高窗口会裁掉两侧/上下更多）。
 - **内页（文章/归档/关于）仍是主题默认的 35vh 背景带**（`object-cover` 按需裁剪），避免正文被顶得太低。
   想让内页也按原比例：把规则里的 `.banner-natural.enable-banner` 改成 `.enable-banner`。
 - 其它效果均为主题自带：下滑隐藏导航栏、页面切换动画（swup）。
