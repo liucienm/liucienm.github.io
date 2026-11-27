@@ -48,10 +48,12 @@ draft: false
 
 ## 部署
 
-1. GitHub 仓库 Settings → Pages → Source 选择 **GitHub Actions**。
-2. push 到 `main` 即自动构建上线。
-3. 部署到 `https://liucienm.github.io/` 根路径时，把 `astro.config.mjs` 里的 `base` 改成 `"/"`；
-   部署到项目子路径（如 `https://liucienm.github.io/blog-v2/`）时用 `base: "/blog-v2/"`。
+- 正式站点：<https://liucienm.github.io/>，仓库 `liucienm/liucienm.github.io`，`main` 分支是**源码**（不是构建产物）。
+- `astro.config.mjs` 里 `site: "https://liucienm.github.io"`、`base: "/"`（部署到子路径时才需要改 `base`）。
+- GitHub 仓库 Settings → Pages → Source 选 **GitHub Actions**；push 到 `main` 即由 `.github/workflows/deploy.yml` 构建并发布。
+- 旧版本存档（只读，不再维护）：
+  - `legacy-hexo`：迁移前的 Hexo 生成产物（12 次 "Site updated" 提交）
+  - `legacy-hexo-source`：迁移前的 Hexo 源码（tag `hexo-final`）
 
 ## 背景图（banner）
 
