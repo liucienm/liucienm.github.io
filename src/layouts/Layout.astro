@@ -61,8 +61,6 @@ const favicons: Favicon[] =
 // 社交分享图（默认用 public/og-default.jpg，页面可通过 ogImage 覆盖）与规范化链接
 const siteOrigin = Astro.site ?? new URL(Astro.url.origin);
 const ogImageUrl = new URL(ogImage || "/og-default.jpg", siteOrigin).toString();
-// 微信专用：极简方图（无文字）。微信缩略图只有 ~100px，文字版会糊
-const wechatImageUrl = new URL("/og-wechat.jpg", siteOrigin).toString();
 const canonicalUrl = new URL(Astro.url.pathname, siteOrigin).toString();
 
 // const siteLang = siteConfig.lang.replace('_', '-')
@@ -107,20 +105,15 @@ const bannerOffset =
 		<meta name="twitter:title" content={pageTitle}>
 		<meta name="twitter:description" content={description || pageTitle}>
 
-		{/* 社交分享图：1200×1200 方图，内容压在中央横带内，
-		    这样微信（中心裁 1:1）和 Telegram/Twitter（中心裁 1.91:1）都不会切到文字 */}
+		{/* 社交分享图：1200×630 横幅，所有平台共用（含微信，微信会自行中心裁成方形） */}
 		<meta property="og:image" content={ogImageUrl}>
 		<meta property="og:image:type" content="image/jpeg">
 		<meta property="og:image:width" content="1200">
-		<meta property="og:image:height" content="1200">
+		<meta property="og:image:height" content="630">
 		<meta property="og:image:alt" content={pageTitle}>
 		<meta name="twitter:image" content={ogImageUrl}>
 		<meta name="twitter:image:alt" content={pageTitle}>
-
-		{/* 微信专用图：微信不公开就读哪个字段，这里把 image_src / itemprop 都指向极简方图；
-		    og:image 保持文字版给 Telegram / Discord / Twitter */}
-		<link rel="image_src" href={wechatImageUrl}>
-		<meta itemprop="image" content={wechatImageUrl}>
+		<meta itemprop="image" content={ogImageUrl}>
 
 		{/* 规范化链接：带不带查询参数/尾斜杠都指向唯一地址 */}
 		<link rel="canonical" href={canonicalUrl}>
