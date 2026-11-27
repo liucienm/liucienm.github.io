@@ -57,8 +57,13 @@ draft: false
 
 - 图片：`src/assets/images/banner.jpg`，构建时自动转 WebP。
 - 开关 / 对齐方式 / 署名：`src/config.ts` 的 `siteConfig.banner`。
-- 高度：`src/constants/constants.ts` —— `BANNER_HEIGHT`（内页，默认 35vh）、`BANNER_HEIGHT_EXTEND`（首页额外高度，默认 30 → 首页共 65vh）。
-- 效果均为主题自带：首页大背景 + 主面板上浮覆盖、下滑时导航栏隐藏、页面切换动画（swup）。
+- **首页按原图比例完整显示（不裁剪）**：实现写在 [src/layouts/Layout.astro](src/layouts/Layout.astro) 的 `.banner-natural.enable-banner …` 规则里——
+  首页 body 多一个 `banner-natural` 类，banner 改回文档流、高度由图片 16:9 比例决定，内容排在图片下方；
+  同时取消 `#top-row` 为绝对定位 banner 预留的 65vh，否则高度会重复计算。
+- **内页（文章/归档/关于）仍是主题默认的 35vh 背景带**（`object-cover` 按需裁剪），避免正文被顶得太低。
+  想让内页也按原比例：把上述规则里的 `.banner-natural.enable-banner` 改成 `.enable-banner` 即可，代价是内页顶部会变很高。
+- 高度常量在 `src/constants/constants.ts`（只影响未启用 `banner-natural` 的页面）。
+- 其它效果均为主题自带：下滑隐藏导航栏、主面板上浮、页面切换动画（swup）。
 
 ## 备注
 
